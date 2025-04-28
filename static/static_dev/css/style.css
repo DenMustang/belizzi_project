@@ -1,0 +1,470 @@
+html, body{
+	height: 100%;
+}
+html{
+	position: relative;
+	min-height: 100%;
+}
+*{
+	margin: 0;
+	padding: 0;
+}
+body{
+	font-family: 'Josefin Sans';
+	font-size: 14px;
+	line-height: 20px;
+
+	font-weight: 400;
+
+	color: #6E7FAA;
+
+	-webkit-font-smoothing: antialiased;
+    -webkit-overflow-scrolling: touch;
+}
+
+/* bootstrap row no margin */
+.row{
+    margin-left: 0;
+    margin-right: 0;
+}
+.container{
+    max-width: 375px;
+}
+
+/* h1, h2, h3, h4, h5, p, b, a */
+h1, h2, h3, h4, h5, p, b{
+    margin: 0;
+}
+h1{
+	font-size: 30px;
+	line-height: 30px;
+
+	font-weight: 600;
+	color: #3E3F68;
+}
+h2{
+	font-size: 24px;
+	line-height: 24px;
+
+	font-weight: bold;
+	color: #3E3F68;
+}
+h3{
+	font-size: 18px;
+	line-height: 18px;
+
+	font-weight: bold;
+	color: #3E3F68;
+}
+h4{
+	font-size: 16px;
+	line-height: 16px;
+
+	font-weight: bold;
+	color: #3E3F68;
+}
+h5{
+	font-size: 14px;
+	line-height: 14px;
+
+	font-weight: bold;
+	color: #3E3F68;
+}
+a{
+	color: #6E7FAA;
+	text-decoration: none;
+}
+a:hover{
+	filter: brightness(110%);
+	transition: 0.2s ease;
+
+	text-decoration: none;
+}
+p{
+	font-size: 14px;
+	line-height: 20px;
+}
+
+/* text-colors */
+.color-6E7FAA{
+	color: #6E7FAA;
+}
+
+/* button */
+button{
+    width: 100%;
+    height: 50px;
+
+    background: #5663FF;
+
+    color: white;
+    font-size: 18px;
+    font-weight: bold;
+
+    border-radius: 10px;
+
+    outline: none;
+    border: none;
+}
+button:hover, .icon-36:hover, .icon-menu:hover{
+    filter: brightness(110%);
+    transition: 0.2s ease;
+}
+button:focus{
+    outline: none;
+}
+button.add-to-cart{
+	margin-top: 20px;
+	margin-left: 20px;
+	margin-right: 20px;
+}
+
+
+/* top-navigation-squares (categories) */
+.icon-menu{
+    width: 77px;
+    line-height: 77px;
+
+	color: white;
+
+    border-radius: 22px;
+	box-shadow: 0px 10px 99px #0000000D;
+
+	font-weight: 500;
+}
+
+.icon-menu > .row::before{
+	content: '';
+	position: absolute;
+
+	width: 77px;
+	height: 77px;
+
+	opacity: 0.25;
+
+	border-radius: 22px;
+	background-size: cover !important;
+	background-position: center !important;
+}
+
+
+/* gradient-overlays */
+.pizza{
+    background: transparent linear-gradient(180deg, #FF5673 0%, #FF8C48 100%) 0% 0% no-repeat padding-box;
+}
+.burger{
+    background: transparent linear-gradient(180deg, #832BF6 0%, #FF4665 100%) 0% 0% no-repeat padding-box;
+}
+.desert{
+    background: transparent linear-gradient(180deg, #2DCEF8 0%, #3B40FE 100%) 0% 0% no-repeat padding-box;
+}
+.drink{
+    background: transparent linear-gradient(91deg, #009DC5 0%, #21E590 100%) 0% 0% no-repeat padding-box;
+}
+
+
+/* image-overlays */
+.icon-menu.pizza > .row::before{
+	background-image: url("/static/media/images/pizza.jpg");
+}
+.icon-menu.burger > .row::before{
+	background-image: url("/static/media/images/burger.jpg");
+}
+.icon-menu.desert > .row::before{
+	background-image: url("/static/media/images/dessert.jpg");
+}
+.icon-menu.drink > .row::before{
+	background-image: url("/static/media/images/drink.jpg");
+}
+
+
+/* restaurant-blocks */
+.restaurant-block{
+    background: #fff;
+    border-radius: 20px;
+
+    width: 100%;
+	box-shadow: 0px 10px 99px #0000001F;
+
+	margin-bottom: 20px;
+}
+.restaurant-image{
+    width: 100%;
+    height: 200px;
+
+	object-fit: cover;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+}
+.restaurant-block h1{
+    font-size: 18px;
+    color: #3E3F68;
+
+    font-weight: bold;
+}
+.restaurant-block p{
+    font-size: 10px;
+}
+.price{
+    font-size: 18px;
+    font-weight: bold;
+
+    line-height: 18px;
+}
+
+
+/* time-cooking-background */
+.bg-rounded{
+    padding: 0px 15px;
+    line-height: 24px;
+
+    border-radius: 99px;
+    color: white;
+}
+.gradient-type{
+    background: transparent linear-gradient(270deg, #FF4665 0%, #832BF6 100%) 0% 0% no-repeat padding-box;
+}
+.gradient-time{
+    background: #848DFF 0% 0% no-repeat padding-box;
+}
+
+
+/* plus/minus/number icons */
+.icon-36{
+    width: 36px;
+    height: 36px;
+
+    box-shadow: 0px 3px 6px #5663FF85;
+    border-radius: 99px;
+}
+.plus{
+    background-image: url('/static/media/images/iconmonstr-plus-2.svg');
+    background-size: cover;
+
+}
+.minus{
+    background-image: url("/static/media/images/minus.svg");
+    background-size: cover;
+
+}
+.number{
+    width: 36px;
+    text-align: center;
+
+    padding: 0px;
+
+    border: none;
+    outline: none;
+}
+.number:focus{
+    outline: none;
+}
+
+
+/* restaurant-block */
+.restaurant-block button.add-to-cart,
+.restaurant-block button.minus,
+.restaurant-block .number{
+	display: none;
+}
+
+.restaurant-block.active ul > li{
+	padding-left: 0 !important;
+    display: block;
+}
+.restaurant-block.active button.add-to-cart,
+.restaurant-block.active button.minus,
+.restaurant-block.active .number{
+	display: block;
+}
+
+.restaurant-info{
+	padding: 20px 10px;
+}
+.restaurant-info ul > li{
+    font-size: 12px;
+    display: inline-block;
+}
+.restaurant-info ul > li:before{
+    content: '•';
+    margin-right: 5px;
+}
+ul.focus > li{
+    padding-left: 0 !important;
+    display: block;
+}
+
+
+/* categories */
+.arrow-back{
+    width: 24px;
+    height: 24px;
+
+    position: absolute;
+
+    background-image: url("/static/media/images/back.svg");
+    background-size: cover;
+}
+h2.category-page-title{
+    color: black;
+    font-size: 24px;
+    line-height: 24px;
+}
+
+.category-block{
+    width: 100%;
+    padding: 30px 0px;
+
+    border-radius: 22px;
+}
+.category-block:hover{
+	transition: 0.2s ease;
+	filter: brightness(110%);
+}
+.category{
+    font-size: 24px;
+    color: white;
+}
+.category-page-header{
+	background: transparent linear-gradient(90deg, #FF5673 0%, #FF8C48 100%) 0% 0% no-repeat padding-box;
+}
+.category-page-header h2{
+	color: white;
+}
+.category-page-header .arrow-back{
+	filter: invert(1);
+}
+.dash{
+	width: 20px;
+	height: 4px;
+
+	border-radius: 99px;
+
+	background: rgba(255, 255, 255, 0.5);
+
+	margin-left: 8px;
+}
+.dash.active{
+	background: #fff;
+}
+
+
+/* filters */
+.category-filters > .col-4{
+	padding-left: 5px;
+	padding-right: 5px;
+
+	margin-bottom: 15px;
+}
+.category-filters > .col-4 > div{
+	text-align: center;
+	background: #fff;
+
+	border: 1px solid #cdcbcb;
+	border-radius: 99px;
+
+	padding: 10px 0px;
+}
+.category-filters > .col-4 > div:hover{
+	background: transparent linear-gradient(270deg, #FF5673 0%, #FF8C48 100%) 0% 0% no-repeat padding-box;
+	border: 1px solid rgba(255, 255, 255, 0);
+
+	color: white;
+
+	transition: 0.2s ease;
+}
+input[type='range'] {
+	overflow: hidden;
+	width: 100%;
+	-webkit-appearance: none;
+	background-color: #848DFF26;
+}
+input[type='range']:focus{
+	outline: none;
+}
+
+input[type='range']::-webkit-slider-runnable-track {
+	height: 14px;
+	-webkit-appearance: none;
+	color: #13bba4;
+	margin-top: -1px;
+}
+
+input[type='range']::-webkit-slider-thumb {
+	width: 14px;
+	-webkit-appearance: none;
+	height: 14px;
+	cursor: ew-resize;
+	background: #3c46c2;
+	background-size: cover;
+	box-shadow: -300px 0 0 300px #5663FF;
+}
+input[type="range"]::-moz-range-progress {
+	background-color: #43e5f7;
+}
+input[type="range"]::-moz-range-track {
+	background-color: #9a905d;
+}
+input[type="range"]::-ms-fill-lower {
+	background-color: #43e5f7;
+}
+input[type="range"]::-ms-fill-upper {
+	background-color: #9a905d;
+}
+
+
+/* quick checkout */
+.quick-checkout{
+	position: fixed;
+	left: 0;
+	right: 0;
+	bottom: -188px;
+
+	padding-left: 0;
+	padding-right: 0;
+
+	box-shadow: 0px -4px 6px #36363629;
+	background: #fff;
+	border-top-left-radius: 20px;
+	border-top-right-radius: 20px;
+
+}
+.quick-checkout.active{
+	bottom: 0;
+	transition: 0.3s ease;
+}
+.quick-checkout-content{
+	padding: 30px 30px;
+}
+.dash-to-open{
+	padding: 10px 0px;
+	cursor: pointer;
+}
+.dash-to-open > .dash{
+	background: #D8D8D8;
+	width: 36px;
+	height: 6px;
+	border-radius: 99px;
+}
+.dash-to-open > .dash:hover{
+	background: #a9a9a9;
+	transition: 0.2s ease;
+}
+
+
+/* backgrounds */
+.gray{
+    background: #f0f0f0;
+}
+.light-gray{
+    background: #f8f8f8;
+}
+
+
+/* others */
+.z-index-1{
+	z-index: 1;
+}
+.max-width-250{
+    max-width: 250px;
+}

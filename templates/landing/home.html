@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+
+    	<div class="container padding-bottom-150 light-gray">
+        <div class="row">
+
+            {% for prod in product_item %}
+                <div class="restaurant-block">
+                    <div class="row">
+                        <img src="{{ prod.image.url }}" class="restaurant-image"/>
+                    </div>
+                    <div class="row restaurant-info">
+                        <div class="row">
+                            <div class="col-9">
+                                <h1 class="margin-bottom-10">
+                                    {{ prod.name }}
+                                </h1>
+                                <ul class="padding-left-10 margin-bottom-10">
+                                    <li>{{ prod.description }}</li>
+                                </ul>
+                            </div>
+                        </div>
+                        <div class="row padding-left-20 padding-right-20">
+                            <div class="price align-self-center">
+                                {{ prod.price }} $
+                            </div>
+                            <div class="type bg-rounded gradient-type margin-left-10">
+                                {{ prod.category.name }}
+                            </div>
+                            <div class="time bg-rounded gradient-time margin-left-10">
+                                35 min
+                            </div>
+                        </div>
+                        <button class="add-to-cart">Add to cart</button>
+                    </div>
+                </div>
+            {% endfor %}
+
+        </div>
+    </div>
+
+
+{% endblock %}

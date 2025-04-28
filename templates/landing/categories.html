@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+	<div class="container light-gray">
+        <div class="row">
+
+            {% for cat in category %}
+                <a href="{% url 'category' cat.id %}" class="w-100">
+                    <div class="category-block pizza margin-bottom-20">
+                        <div class="category text-center align-self-center">
+                            {{ cat.name }}
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+        </div>
+    </div>
+
+{% endblock %}
+

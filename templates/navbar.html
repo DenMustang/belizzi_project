@@ -1,0 +1,27 @@
+
+	<div class="container padding-top-20 padding-bottom-20 light-gray">
+		<div class="row justify-content-between padding-left-10 padding-right-10 margin-bottom-5">
+		</div>
+		<div class="row justify-content-between">
+                <a href="{% url 'home' %}">
+                    <div class="icon-menu pizza text-center">
+                        <div class="row justify-content-center">
+                            <div class="z-index-1">
+                                All
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            {% for cat in category %}
+                <a href="{% url 'category' cat.id %}">
+                    <div class="icon-menu pizza text-center">
+                        <div class="row justify-content-center">
+                            <div class="z-index-1">
+                                {{ cat.name }}
+                            </div>
+                        </div>
+                    </div>
+                </a>
+            {% endfor %}
+		</div>
+	</div>

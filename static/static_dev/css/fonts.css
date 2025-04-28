@@ -1,0 +1,36 @@
+@font-face{
+    font-family: 'Josefin Sans';
+    src: url('../fonts/JosefinSans-Bold.ttf') format('truetype');
+    font-weight: 600;
+    font-style: normal;
+}
+
+@font-face{
+    font-family: 'Josefin Sans';
+    src: url('../fonts/JosefinSans-SemiBold.ttf') format('truetype');
+    font-weight: 500;
+    font-style: normal;
+}
+
+@font-face{
+    font-family: 'Josefin Sans';
+    src: url('../fonts/JosefinSans-Regular.ttf') format('truetype');
+    font-weight: 400;
+    font-style: normal;
+}
+
+/* italic */
+
+@font-face{
+	font-family: 'Josefin Sans';
+    src: url('../fonts/JosefinSans-SemiBoldItalic.ttf') format('truetype');
+    font-weight: 600;
+    font-style: italic;
+}
+
+@font-face{
+	font-family: 'Josefin Sans';
+    src: url('../fonts/JosefinSans-RegularItalic.ttf') format('truetype');
+    font-weight: 400;
+    font-style: italic;
+}
