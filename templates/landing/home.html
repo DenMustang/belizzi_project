@@ -34,7 +34,7 @@
                                 35 min
                             </div>
                         </div>
-                        <button class="add-to-cart">Add to cart</button>
+                        <button class="add-to-cart" onclick="addToCart('{{ prod.id }}', '{{ prod.name }}', '{{ prod.price }}', '{{ prod.category.name }}')">Add to cart</button>
                     </div>
                 </div>
             {% endfor %}

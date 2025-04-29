@@ -233,29 +233,44 @@ button.add-to-cart{
 .icon-36{
     width: 36px;
     height: 36px;
-
     box-shadow: 0px 3px 6px #5663FF85;
     border-radius: 99px;
+    position: relative;
+    color: transparent;
 }
+
+.icon-36 span {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 20px;
+    font-weight: bold;
+    display: inline-block;
+    line-height: 1;
+}
+
 .plus{
+    background: #5663FF;
     background-image: url('/static/media/images/iconmonstr-plus-2.svg');
     background-size: cover;
-
 }
+
 .minus{
+    background: #5663FF;
     background-image: url("/static/media/images/minus.svg");
     background-size: cover;
-
 }
+
 .number{
     width: 36px;
     text-align: center;
-
     padding: 0px;
-
     border: none;
     outline: none;
 }
+
 .number:focus{
     outline: none;
 }

@@ -30,6 +30,7 @@
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="{% static '/js/handleCounter.js' %}"></script>
     <script src="{% static '/js/index.js' %}"></script>
+    <script src="{% static '/js/cart.js' %}"></script>
 
     <script>
 		var boxes = $('div.restaurant-block');
@@ -59,7 +60,17 @@
                 console.log('reached maximize'+e)
             }
         }
-        $('#handleCounter').handleCounter(options)
+        // Initialize the handleCounter for any element that exists on page load
+        $('#handleCounter').handleCounter(options);
+        
+        // Our custom cart quantity control with + and - buttons
+        $(document).on('click', '.counter-plus.minus', function() {
+            // This is already handled in cart.js
+        });
+        
+        $(document).on('click', '.counter-minus.plus', function() {
+            // This is already handled in cart.js
+        });
     })
     function valChanged(d) {
     }
