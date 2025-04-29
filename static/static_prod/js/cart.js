@@ -138,7 +138,7 @@ function updateCartUI() {
     
     // Make cart visible
     const checkout = $('.quick-checkout');
-    if (cart.length > 0 && !checkout.hasClass('active') && !window.location.pathname.includes('/checkout')) {
+    if (cart.length > 0 && !checkout.hasClass('active')) {
         checkout.addClass('active');
     }
 }
@@ -187,11 +187,6 @@ function updateQuantity(productId, change) {
         
         // Update UI
         updateCartUI();
-        
-        // If we're on the checkout page, update checkout items too
-        if (window.location.pathname.includes('/checkout')) {
-            loadCheckoutItems();
-        }
     }
 }
 
@@ -200,64 +195,4 @@ function clearCart() {
     cart = [];
     localStorage.removeItem('cart');
     updateCartUI();
-}
-
-// Load items on the checkout page
-function loadCheckoutItems() {
-    const checkoutItemsContainer = $('#checkout-items');
-    
-    if (!checkoutItemsContainer.length) return;
-    
-    // Clear existing items
-    checkoutItemsContainer.empty();
-    
-    if (cart.length === 0) {
-        checkoutItemsContainer.html('<p>Your cart is empty</p>');
-        $('#subtotal-price').text('$0.00');
-        $('#total-price').text('$0.00');
-        return;
-    }
-    
-    // Calculate subtotal
-    let subtotal = 0;
-    
-    // Add each item to the checkout page
-    cart.forEach(item => {
-        const itemTotal = item.price * item.quantity;
-        subtotal += itemTotal;
-        
-        const itemHtml = `
-            <div class="checkout-item border-bottom padding-bottom-10 margin-bottom-10">
-                <div class="checkout-item-details">
-                    <span class="checkout-item-quantity">${item.quantity}</span>
-                    <div>
-                        <h4>${item.name}</h4>
-                        <p class="margin-bottom-0">${item.category}</p>
-                    </div>
-                </div>
-                <div>
-                    <h4>$${itemTotal.toFixed(2)}</h4>
-                </div>
-            </div>
-        `;
-        
-        checkoutItemsContainer.append(itemHtml);
-    });
-    
-    // Update prices
-    const deliveryFee = 2.99;
-    const total = subtotal + deliveryFee;
-    
-    $('#subtotal-price').text(`$${subtotal.toFixed(2)}`);
-    $('#total-price').text(`$${total.toFixed(2)}`);
-    
-    // Add event listener to complete order button
-    $('#complete-order-btn').off('click').on('click', function() {
-        // For now, just clear the cart and show a confirmation
-        alert('Thank you for your order!');
-        clearCart();
-        setTimeout(() => {
-            window.location.href = '/';
-        }, 1000);
-    });
 } 
