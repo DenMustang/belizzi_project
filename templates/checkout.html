@@ -1,0 +1,99 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+<div class="container checkout-container">
+    <div class="row margin-top-30">
+        <div class="col-12">
+            <div class="d-flex align-items-center justify-content-between">
+                <div class="d-flex align-items-center">
+                    <a href="javascript:history.back()" class="arrow-back margin-right-15"></a>
+                    <h2 class="category-page-title">Checkout</h2>
+                </div>
+                <a href="{% url 'home' %}" class="back-to-menu-btn">
+                    <span class="menu-icon">🍽️</span> Back to Menu
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <div class="row margin-top-30">
+        <div class="col-12">
+            <!-- Order Items Section -->
+            <div class="light-gray p-4 rounded-lg margin-bottom-20">
+                <h3 class="margin-bottom-20">Order Items</h3>
+                <div id="checkout-items">
+                    <!-- Order items will be loaded here dynamically -->
+                </div>
+                
+                <div class="border-top margin-top-20 margin-bottom-20"></div>
+                
+                <div class="d-flex justify-content-between margin-top-30">
+                    <h4>Subtotal:</h4>
+                    <h4 id="subtotal-price">$0.00</h4>
+                </div>
+                <div class="d-flex justify-content-between margin-top-10">
+                    <h4>Delivery:</h4>
+                    <h4>$2.99</h4>
+                </div>
+                <div class="d-flex justify-content-between margin-top-10">
+                    <h4>Total:</h4>
+                    <h4 id="total-price" class="color-6E7FAA">$0.00</h4>
+                </div>
+            </div>
+            
+            <!-- Payment Method Section -->
+            <div class="light-gray p-4 rounded-lg margin-bottom-20">
+                <h3 class="margin-bottom-20">Payment Method</h3>
+                
+                <div class="payment-option margin-bottom-15">
+                    <input type="radio" id="card" name="payment" value="card" checked>
+                    <label for="card" class="margin-left-10">
+                        <span class="payment-icon">💳</span>
+                        Credit/Debit Card
+                    </label>
+                </div>
+                
+                <div class="payment-option margin-bottom-15">
+                    <input type="radio" id="apple-pay" name="payment" value="apple-pay">
+                    <label for="apple-pay" class="margin-left-10">
+                        <span class="payment-icon">🍎</span>
+                        Apple Pay
+                    </label>
+                </div>
+                
+                <div class="payment-option margin-bottom-15">
+                    <input type="radio" id="blik" name="payment" value="blik">
+                    <label for="blik" class="margin-left-10">
+                        <span class="payment-icon">🇵🇱</span>
+                        Blik
+                    </label>
+                </div>
+                
+                <div class="payment-option margin-bottom-15">
+                    <input type="radio" id="cash" name="payment" value="cash">
+                    <label for="cash" class="margin-left-10">
+                        <span class="payment-icon">💵</span>
+                        Cash
+                    </label>
+                </div>
+                
+                <div class="payment-option margin-bottom-15">
+                    <input type="radio" id="google-pay" name="payment" value="google-pay">
+                    <label for="google-pay" class="margin-left-10">
+                        <span class="payment-icon">🔵</span>
+                        Google Pay
+                    </label>
+                </div>
+            </div>
+            
+            <!-- Separate Complete Order Button - Centered -->
+            <div class="d-flex justify-content-center margin-top-30 margin-bottom-30">
+                <button class="add-to-cart complete-order-btn" id="complete-order-btn">Complete Order</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script src="{% static '/js/checkout.js' %}"></script>
+{% endblock content %} 
