@@ -12,7 +12,7 @@ urlpatterns = [
     url(r'^category/', views.categories, name='category'),
 
     url(r'^categories/', views.categoriespage, name='categories'),
-
+    url(r'^checkout/$', views.checkout, name='checkout'),
 
 ]
 

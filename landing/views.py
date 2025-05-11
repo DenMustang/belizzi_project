@@ -38,3 +38,9 @@ def categoriespage(request):
         del request.session[LANGUAGE_SESSION_KEY]
 
     return render(request, 'landing/categories.html', locals())
+
+def checkout(request):
+    # This view simply renders the checkout template
+    # Cart content is handled by JavaScript on the client side
+    
+    return render(request, 'checkout.html', locals())
