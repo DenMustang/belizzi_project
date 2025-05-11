@@ -1,0 +1,113 @@
+/* Base styles */
+body {
+    font-family: 'Roboto', sans-serif;
+    background: linear-gradient(135deg, #6a11cb, #2575fc); /* Gradient background */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    color: #333;
+}
+
+h2 {
+    color: #000;  /* Change text color to black */
+    margin-top: 10px;  /* Space above the title */
+    margin-bottom: 20px;
+    font-size: 2rem;
+    text-align: center;
+    font-weight: 600;
+}
+
+/* Container for login/register forms */
+.login-container, .register-container {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* Card style for forms */
+.login-card, .register-card {
+    background-color: white;
+    padding: 40px;
+    border-radius: 20px;
+    box-shadow: 0 15px 25px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 380px;
+    text-align: center;
+    transition: transform 0.3s ease-in-out;
+}
+
+/* Hover effect on card */
+.login-card:hover, .register-card:hover {
+    transform: translateY(-10px); /* Floating effect on hover */
+}
+
+/* Form input and button styling */
+input[type="text"], input[type="password"], input[type="email"] {
+    width: 100%;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 30px;
+    border: 1px solid #ddd;
+    font-size: 1rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+input[type="text"]:focus, input[type="password"]:focus, input[type="email"]:focus {
+    border-color: #2575fc;
+    box-shadow: 0 0 10px rgba(37, 117, 252, 0.3); /* Focus shadow effect */
+}
+
+button[type="submit"] {
+    width: 100%;
+    padding: 15px;
+    background: linear-gradient(45deg, #2575fc, #6a11cb);
+    color: white;
+    border: none;
+    border-radius: 30px;
+    font-size: 1.1rem;
+    cursor: pointer;
+    transition: background 0.3s ease, transform 0.2s ease;
+}
+
+button[type="submit"]:hover {
+    background: linear-gradient(45deg, #6a11cb, #2575fc);
+    transform: scale(1.05);
+}
+
+/* Links */
+a {
+    color: #2575fc;
+    text-decoration: none;
+    font-size: 1.1rem;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+/* SVG Icon Styling */
+.profile-icon-container {
+    margin-bottom: 20px;  /* Space below the SVG */
+}
+
+.profile-icon {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+}
+
+/* Mobile responsiveness */
+@media (max-width: 600px) {
+    .login-card, .register-card {
+        padding: 20px;
+        width: 90%;
+    }
+
+    h2 {
+        font-size: 1.7rem;
+    }
+}
