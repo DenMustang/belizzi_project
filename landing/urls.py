@@ -19,6 +19,8 @@ urlpatterns = [
     path('register/', views.register, name='register'),  # Registration page
     path('login/', views.user_login, name='login'),  # Login page
     path('logout/', views.user_logout, name='logout'),  # Logout page
+    path('order_confirmation/', views.order_confirmation, name='order_confirmation'),  # Order confirmation page
+
 
 ]
 
