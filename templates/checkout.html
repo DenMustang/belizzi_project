@@ -23,11 +23,11 @@
             <div class="light-gray p-4 rounded-lg margin-bottom-20">
                 <h3 class="margin-bottom-20">Order Items</h3>
                 <div id="checkout-items">
-                    <!-- Order items will be loaded here dynamically -->
+                    <!-- Order items will be dynamically loaded here via JavaScript -->
                 </div>
-                
+
                 <div class="border-top margin-top-20 margin-bottom-20"></div>
-                
+
                 <div class="d-flex justify-content-between margin-top-30">
                     <h4>Subtotal:</h4>
                     <h4 id="subtotal-price">$0.00</h4>
@@ -41,11 +41,11 @@
                     <h4 id="total-price" class="color-6E7FAA">$0.00</h4>
                 </div>
             </div>
-            
+
             <!-- Payment Method Section -->
             <div class="light-gray p-4 rounded-lg margin-bottom-20">
                 <h3 class="margin-bottom-20">Payment Method</h3>
-                
+
                 <div class="payment-option margin-bottom-15">
                     <input type="radio" id="card" name="payment" value="card" checked>
                     <label for="card" class="margin-left-10">
@@ -53,7 +53,7 @@
                         Credit/Debit Card
                     </label>
                 </div>
-                
+
                 <div class="payment-option margin-bottom-15">
                     <input type="radio" id="apple-pay" name="payment" value="apple-pay">
                     <label for="apple-pay" class="margin-left-10">
@@ -61,7 +61,7 @@
                         Apple Pay
                     </label>
                 </div>
-                
+
                 <div class="payment-option margin-bottom-15">
                     <input type="radio" id="blik" name="payment" value="blik">
                     <label for="blik" class="margin-left-10">
@@ -69,7 +69,7 @@
                         Blik
                     </label>
                 </div>
-                
+
                 <div class="payment-option margin-bottom-15">
                     <input type="radio" id="cash" name="payment" value="cash">
                     <label for="cash" class="margin-left-10">
@@ -77,7 +77,7 @@
                         Cash
                     </label>
                 </div>
-                
+
                 <div class="payment-option margin-bottom-15">
                     <input type="radio" id="google-pay" name="payment" value="google-pay">
                     <label for="google-pay" class="margin-left-10">
@@ -86,8 +86,8 @@
                     </label>
                 </div>
             </div>
-            
-            <!-- Separate Complete Order Button - Centered -->
+
+            <!-- Complete Order Button - Centered -->
             <div class="d-flex justify-content-center margin-top-30 margin-bottom-30">
                 <button class="add-to-cart complete-order-btn" id="complete-order-btn">Complete Order</button>
             </div>
@@ -96,4 +96,27 @@
 </div>
 
 <script src="{% static 'static_dev/js/checkout.js' %}"></script>
-{% endblock content %} 
+
+<script>
+    // JavaScript to handle the Complete Order button click
+    document.getElementById('complete-order-btn').addEventListener('click', function() {
+        // Get the selected payment method
+        var paymentMethod = document.querySelector('input[name="payment"]:checked').value;
+
+        // Log the selected payment method (for debugging)
+        console.log("Selected Payment Method: " + paymentMethod);
+
+        // If payment method is selected, proceed with the order and redirect
+        if (paymentMethod) {
+            // Simulate a successful order submission (you can replace this with actual order handling logic)
+            alert("Order completed successfully using " + paymentMethod);
+
+            // Redirect to order confirmation or another page (e.g., order summary)
+            window.location.href = "{% url 'order_confirmation' %}";
+        } else {
+            alert("Please select a payment method!");
+        }
+    });
+</script>
+
+{% endblock content %}

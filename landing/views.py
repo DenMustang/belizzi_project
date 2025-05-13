@@ -39,13 +39,17 @@ def user_login(request):
     return render(request, 'landing/login.html', {'form': form})
 
 
-
 # User logout view
 @login_required
 def user_logout(request):
     logout(request)
     messages.info(request, 'You have been logged out.')
     return redirect('login')  # Redirect to the login page after logout
+
+
+# User order confirmation
+def order_confirmation(request):
+    return render(request, 'landing/order_confirmation.html')
 
 
 LANGUAGE_SESSION_KEY = 'django_language'  # ✅ manually define it
