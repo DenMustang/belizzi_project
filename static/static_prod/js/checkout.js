@@ -35,6 +35,24 @@ $(document).ready(function() {
         }
     });
     
+    // Check if cart items are loaded
+    const cartData = localStorage.getItem('cart');
+    if (cartData) {
+        try {
+            console.log("Found cart data in localStorage");
+            // The loadCheckoutItems function is in cart.js and will be called
+            // automatically when the page loads due to the pathname check
+        } catch (e) {
+            console.error("Error parsing cart data:", e);
+            $('#checkout-items').html('<p>Error loading cart data</p>');
+        }
+    } else {
+        console.log("No cart data found");
+        $('#checkout-items').html('<p>Your cart is empty</p>');
+        $('#subtotal-price').text('$0.00');
+        $('#total-price').text('$0.00');
+    }
+    
     // Improve payment method selection styling
     $('.payment-option input[type="radio"]').on('change', function() {
         // Remove active class from all options

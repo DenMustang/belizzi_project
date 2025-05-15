@@ -1,34 +1,68 @@
 // Cart functionality
 let cart = [];
 
-// Load cart from localStorage if available
+// Load cart from localStorage and initialize UI on page load
 $(document).ready(function() {
+    // Always load cart from localStorage first
     if (localStorage.getItem('cart')) {
-        cart = JSON.parse(localStorage.getItem('cart'));
-        updateCartUI();
+        try {
+            cart = JSON.parse(localStorage.getItem('cart'));
+            console.log("Cart loaded:", cart);
+        } catch (e) {
+            console.error("Error parsing cart from localStorage:", e);
+            cart = [];
+            localStorage.removeItem('cart');
+        }
     }
     
-    // If we're on the checkout page, load checkout items and hide unnecessary elements
+    // CRITICAL: Set up event handlers after cart is loaded
+    setupEventHandlers();
+    
+    // Update UI based on current page
     if (window.location.pathname.includes('/checkout')) {
+        // On checkout page
         loadCheckoutItems();
-        // Hide quick checkout on checkout page
+        // Hide quick checkout panel on checkout page
         $('.quick-checkout').hide();
-        // Hide category buttons at the top (they're typically in navbar.html)
+        // Hide category buttons
         $('.icon-menu').parent().parent().hide();
+    } else {
+        // On regular pages (home, category, etc.)
+        updateQuickCheckoutUI();
+        
+        // Show cart panel if it has items and was previously active
+        if (cart.length > 0 && localStorage.getItem('quickCheckoutActive') === 'true') {
+            $('.quick-checkout').addClass('active');
+        }
     }
-    
-    // Add event listener to the order button
-    $('.quick-checkout .add-to-cart').on('click', function() {
-        window.location.href = '/checkout';
-    });
-    
-    // Remove any previous global event listeners to prevent double-binding
+});
+
+// Set up all event handlers
+function setupEventHandlers() {
+    // Clear any existing handlers to prevent duplicates
+    $('.quick-checkout .add-to-cart').off('click');
+    $('.dash-to-open').off('click');
     $(document).off('click', '.counter-plus.minus');
     $(document).off('click', '.counter-minus.plus');
     
-    // Add global event listeners for cart quantity buttons
+    // "Order" button in quick checkout
+    $('.quick-checkout .add-to-cart').on('click', function() {
+        console.log("Order button clicked, redirecting to checkout");
+        window.location.href = '/checkout';
+    });
+    
+    // Toggle quick checkout panel
+    $('.dash-to-open').on('click', function() {
+        console.log("Dash to open clicked");
+        $('.quick-checkout').toggleClass('active');
+        
+        // Store state in localStorage
+        localStorage.setItem('quickCheckoutActive', $('.quick-checkout').hasClass('active'));
+        console.log("Quick checkout active:", localStorage.getItem('quickCheckoutActive'));
+    });
+    
+    // Quantity buttons (minus)
     $(document).on('click', '.counter-plus.minus', function(e) {
-        console.log('Minus button clicked');
         e.preventDefault();
         e.stopPropagation();
         
@@ -48,8 +82,8 @@ $(document).ready(function() {
         }, 300);
     });
     
+    // Quantity buttons (plus)
     $(document).on('click', '.counter-minus.plus', function(e) {
-        console.log('Plus button clicked');
         e.preventDefault();
         e.stopPropagation();
         
@@ -68,9 +102,9 @@ $(document).ready(function() {
             button.data('clicking', false);
         }, 300);
     });
-});
+}
 
-// Add to cart function
+// Add to cart function - called from product pages
 function addToCart(productId, productName, productPrice, productCategory) {
     // Check if product already exists in cart
     const existingProductIndex = cart.findIndex(item => item.id === productId);
@@ -91,42 +125,52 @@ function addToCart(productId, productName, productPrice, productCategory) {
     
     // Save cart to localStorage
     localStorage.setItem('cart', JSON.stringify(cart));
+    console.log("Added to cart, new cart:", cart);
+    
+    // Show the panel when adding items
+    $('.quick-checkout').addClass('active');
+    localStorage.setItem('quickCheckoutActive', 'true');
     
     // Update UI
-    updateCartUI();
+    updateQuickCheckoutUI();
 }
 
-// Update cart UI
-function updateCartUI() {
-    // Update item count
+// Update cart UI in the quick checkout panel
+function updateQuickCheckoutUI() {
+    console.log("Updating quick checkout UI with", cart.length, "items");
+    
+    // Update item count text
     const itemCount = cart.reduce((total, item) => total + item.quantity, 0);
-    const itemCountText = $('.quick-checkout-content p').first(); // Only target the first paragraph
+    const itemCountText = $('.quick-checkout-content p').first();
     if (itemCountText.length) {
         itemCountText.text(`${itemCount} item${itemCount !== 1 ? 's' : ''} in the basket`);
     }
     
-    // Update checkout content
-    const checkoutContent = $('.quick-checkout-content .border-top.border-bottom').parent();
-    
-    // Clear current items
+    // Get the item template and container
     const existingItems = $('.quick-checkout-content .border-top.border-bottom');
+    
+    // Clear current items (except template)
     existingItems.each(function(index) {
         if (index !== 0) { // Keep the first one as template
             $(this).remove();
         }
     });
     
-    // If cart is empty, hide the first item
+    // If cart is empty, hide everything
     if (cart.length === 0) {
+        console.log("Cart is empty, hiding elements");
         if (existingItems.length) {
             existingItems.first().hide();
         }
+        // Hide the panel when cart is empty
+        $('.quick-checkout').removeClass('active');
+        localStorage.setItem('quickCheckoutActive', 'false');
         return;
     }
     
-    // Clone and modify the first item as template, then add new items
+    // Cart has items - show and update the template
     const template = existingItems.first();
-    template.show(); // Make sure it's visible
+    template.show();
     
     // Update the first item with the first cart item
     updateItemTemplate(template, cart[0]);
@@ -152,12 +196,6 @@ function updateCartUI() {
             counter.handleCounter(options);
         }
     });
-    
-    // Make cart visible
-    const checkout = $('.quick-checkout');
-    if (cart.length > 0 && !checkout.hasClass('active') && !window.location.pathname.includes('/checkout')) {
-        checkout.addClass('active');
-    }
 }
 
 // Update a single item in the cart UI
@@ -172,19 +210,6 @@ function updateItemTemplate(template, item) {
     
     // Add data attribute to identify the item
     template.attr('data-product-id', item.id);
-    
-    // Clear any previous click handlers but don't add new ones directly
-    // We rely on the document-level handlers and handleCounter initialization
-    const minusButton = template.find('.counter-plus.minus');
-    const plusButton = template.find('.counter-minus.plus');
-    
-    if (minusButton.length) {
-        minusButton.off('click');
-    }
-    
-    if (plusButton.length) {
-        plusButton.off('click');
-    }
 }
 
 // Update quantity of an item in the cart
@@ -201,34 +226,40 @@ function updateQuantity(productId, change) {
         
         // Save cart to localStorage
         localStorage.setItem('cart', JSON.stringify(cart));
+        console.log("Updated quantity, new cart:", cart);
         
-        // Update UI
-        updateCartUI();
-        
-        // If we're on the checkout page, update checkout items too
+        // Update UI based on current page
         if (window.location.pathname.includes('/checkout')) {
             loadCheckoutItems();
+        } else {
+            updateQuickCheckoutUI();
         }
     }
 }
 
-// Clear cart
+// Clear cart (used after order completion)
 function clearCart() {
     cart = [];
     localStorage.removeItem('cart');
-    updateCartUI();
+    localStorage.setItem('quickCheckoutActive', 'false');
+    updateQuickCheckoutUI();
 }
 
 // Load items on the checkout page
 function loadCheckoutItems() {
+    console.log("Loading checkout items from cart:", cart);
     const checkoutItemsContainer = $('#checkout-items');
     
-    if (!checkoutItemsContainer.length) return;
+    if (!checkoutItemsContainer.length) {
+        console.error("Checkout items container not found");
+        return;
+    }
     
     // Clear existing items
     checkoutItemsContainer.empty();
     
     if (cart.length === 0) {
+        console.log("Cart is empty on checkout page");
         checkoutItemsContainer.html('<p>Your cart is empty</p>');
         $('#subtotal-price').text('$0.00');
         $('#total-price').text('$0.00');
@@ -267,14 +298,4 @@ function loadCheckoutItems() {
     
     $('#subtotal-price').text(`$${subtotal.toFixed(2)}`);
     $('#total-price').text(`$${total.toFixed(2)}`);
-    
-    // Add event listener to complete order button
-    $('#complete-order-btn').off('click').on('click', function() {
-        // For now, just clear the cart and show a confirmation
-        alert('Thank you for your order!');
-        clearCart();
-        setTimeout(() => {
-            window.location.href = '/';
-        }, 1000);
-    });
 } 

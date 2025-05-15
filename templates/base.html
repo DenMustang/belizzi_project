@@ -24,43 +24,16 @@
 
     {% include 'footer.html' %}
 
+    <!-- Core JavaScript -->
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="{% static 'static_prod/js/handleCounter.js' %}"></script>
     <script src="{% static 'static_prod/js/index.js' %}"></script>
-    <script src="{% static 'static_prod/js/cart.js' %}"></script>
+    
+    <!-- Cart.js - core shopping cart functionality -->
+    <script src="{% static 'static_dev/js/cart.js' %}"></script>
 
-    <script>
-        var boxes = $('div.restaurant-block');
-        boxes.click(function(){
-          $(this).toggleClass('active');
-        });
-
-        var checkout = $('div.quick-checkout');
-        var checkoutOpen = $('div.dash-to-open');
-        checkoutOpen.click(function(){
-          checkout.toggleClass('active');
-        });
-    </script>
-    <script>
-        $(function ($) {
-            var options = {
-                minimum: 1,
-                maximize: 10,
-                onChange: valChanged,
-                onMinimum: function(e) {
-                    console.log('reached minimum: '+e)
-                },
-                onMaximize: function(e) {
-                    console.log('reached maximize'+e)
-                }
-            }
-            // Initialize the handleCounter for any element that exists on page load
-            $('#handleCounter').handleCounter(options);
-        });
-
-        function valChanged(d) {
-        }
-    </script>
+    <!-- Custom page scripts can be added in blocks -->
+    {% block extra_js %}{% endblock %}
 
 </body>
 </html>

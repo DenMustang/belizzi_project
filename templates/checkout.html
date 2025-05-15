@@ -24,6 +24,7 @@
                 <h3 class="margin-bottom-20">Order Items</h3>
                 <div id="checkout-items">
                     <!-- Order items will be dynamically loaded here via JavaScript -->
+                    <div class="loading-indicator">Loading your cart...</div>
                 </div>
 
                 <div class="border-top margin-top-20 margin-bottom-20"></div>
@@ -94,29 +95,9 @@
         </div>
     </div>
 </div>
-
-<script src="{% static 'static_dev/js/checkout.js' %}"></script>
-
-<script>
-    // JavaScript to handle the Complete Order button click
-    document.getElementById('complete-order-btn').addEventListener('click', function() {
-        // Get the selected payment method
-        var paymentMethod = document.querySelector('input[name="payment"]:checked').value;
-
-        // Log the selected payment method (for debugging)
-        console.log("Selected Payment Method: " + paymentMethod);
-
-        // If payment method is selected, proceed with the order and redirect
-        if (paymentMethod) {
-            // Simulate a successful order submission (you can replace this with actual order handling logic)
-            alert("Order completed successfully using " + paymentMethod);
-
-            // Redirect to order confirmation or another page (e.g., order summary)
-            window.location.href = "{% url 'order_confirmation' %}";
-        } else {
-            alert("Please select a payment method!");
-        }
-    });
-</script>
-
 {% endblock content %}
+
+{% block extra_js %}
+<!-- Checkout.js - checkout page functionality -->
+<script src="{% static 'static_dev/js/checkout.js' %}"></script>
+{% endblock extra_js %}
