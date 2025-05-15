@@ -9,7 +9,13 @@
             {% for cat in products %}
                 <div class="restaurant-block">
                     <div class="row">
-                        <img src="{{ cat.image.url }}" class="restaurant-image"/>
+                        {% if cat.image %}
+                            <img src="{{ cat.image.url }}" class="restaurant-image"/>
+                        {% else %}
+                            <div class="restaurant-image" style="background-color: #f8f9fa; display: flex; align-items: center; justify-content: center;">
+                                <h3 style="color: #6c757d;">{{ cat.name }}</h3>
+                            </div>
+                        {% endif %}
                     </div>
                     <div class="row restaurant-info">
                         <div class="row">

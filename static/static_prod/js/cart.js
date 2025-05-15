@@ -28,6 +28,7 @@ $(document).ready(function() {
     
     // Add global event listeners for cart quantity buttons
     $(document).on('click', '.counter-plus.minus', function(e) {
+        console.log('Minus button clicked');
         e.preventDefault();
         e.stopPropagation();
         
@@ -36,9 +37,9 @@ $(document).ready(function() {
         $(this).data('clicking', true);
         
         const itemContainer = $(this).closest('.border-top.border-bottom');
-        const itemIndex = itemContainer.index('.quick-checkout-content .border-top.border-bottom');
-        if (itemIndex >= 0 && itemIndex < cart.length) {
-            updateQuantity(cart[itemIndex].id, -1);
+        const productId = itemContainer.attr('data-product-id');
+        if (productId) {
+            updateQuantity(productId, -1);
         }
         
         const button = $(this);
@@ -48,6 +49,7 @@ $(document).ready(function() {
     });
     
     $(document).on('click', '.counter-minus.plus', function(e) {
+        console.log('Plus button clicked');
         e.preventDefault();
         e.stopPropagation();
         
@@ -56,9 +58,9 @@ $(document).ready(function() {
         $(this).data('clicking', true);
         
         const itemContainer = $(this).closest('.border-top.border-bottom');
-        const itemIndex = itemContainer.index('.quick-checkout-content .border-top.border-bottom');
-        if (itemIndex >= 0 && itemIndex < cart.length) {
-            updateQuantity(cart[itemIndex].id, 1);
+        const productId = itemContainer.attr('data-product-id');
+        if (productId) {
+            updateQuantity(productId, 1);
         }
         
         const button = $(this);
@@ -136,6 +138,21 @@ function updateCartUI() {
         newItem.insertAfter(existingItems.eq(i-1));
     }
     
+    // Initialize handleCounter for all cart items
+    $('.quick-checkout-content .border-top.border-bottom').each(function() {
+        const counter = $(this).find('.row.justify-content-end');
+        if (counter.length) {
+            var options = {
+                minimum: 1,
+                maximize: 10,
+                onChange: function(val) {
+                    // This allows the document-level handlers to do their work
+                }
+            };
+            counter.handleCounter(options);
+        }
+    });
+    
     // Make cart visible
     const checkout = $('.quick-checkout');
     if (cart.length > 0 && !checkout.hasClass('active')) {
@@ -156,8 +173,8 @@ function updateItemTemplate(template, item) {
     // Add data attribute to identify the item
     template.attr('data-product-id', item.id);
     
-    // We'll rely only on the document-level event handlers to avoid duplicate events
-    // Remove previous inline handlers if any
+    // Clear any previous click handlers but don't add new ones directly
+    // We rely on the document-level handlers and handleCounter initialization
     const minusButton = template.find('.counter-plus.minus');
     const plusButton = template.find('.counter-minus.plus');
     

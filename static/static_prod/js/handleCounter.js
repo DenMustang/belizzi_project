@@ -14,9 +14,9 @@
             onMinimum,
             onMaximize;
         var $handleCounter = this
-        $btnMinus = $handleCounter.find('.counter-minus')
+        $btnMinus = $handleCounter.find('.counter-plus.minus')
         $input = $handleCounter.find('input')
-        $btnPlugs = $handleCounter.find('.counter-plus')
+        $btnPlugs = $handleCounter.find('.counter-minus.plus')
         var defaultOpts = {
             writable: true,
             minimum: 1,

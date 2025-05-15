@@ -10,7 +10,13 @@
             {% for prod in product_item %}
                 <div class="restaurant-block">
                     <div class="row">
-                        <img src="{{ prod.image.url }}" class="restaurant-image"/>
+                        {% if prod.image %}
+                            <img src="{{ prod.image.url }}" class="restaurant-image"/>
+                        {% else %}
+                            <div class="restaurant-image" style="background-color: #f8f9fa; display: flex; align-items: center; justify-content: center;">
+                                <h3 style="color: #6c757d;">{{ prod.name }}</h3>
+                            </div>
+                        {% endif %}
                     </div>
                     <div class="row restaurant-info">
                         <div class="row">
