@@ -39,7 +39,12 @@
                                 35 min
                             </div>
                         </div>
-                        <button class="add-to-cart" onclick="addToCart('{{ cat.id }}', '{{ cat.name }}', '{{ cat.price }}', '{{ cat.category.name }}')">Add to cart</button>
+                        <button class="add-to-cart-btn" 
+                            data-id="{{ cat.id }}" 
+                            data-name="{{ cat.name }}" 
+                            data-price="{{ cat.price }}" 
+                            data-category="{{ cat.category.name }}"
+                            type="button">Add to cart</button>
                     </div>
                 </div>
             {% endfor %}
@@ -47,5 +52,24 @@
         </div>
     </div>
 
+{% endblock %}
 
+{% block extra_js %}
+<script>
+    $(document).ready(function() {
+        // Use delegation to handle all add-to-cart buttons
+        $(document).on('click', '.add-to-cart-btn', function(e) {
+            e.stopPropagation();
+            
+            var $btn = $(this);
+            var id = $btn.data('id');
+            var name = $btn.data('name');
+            var price = $btn.data('price');
+            var category = $btn.data('category');
+            
+            console.log("Adding product to cart:", name);
+            addToCart(id, name, price, category);
+        });
+    });
+</script>
 {% endblock %}

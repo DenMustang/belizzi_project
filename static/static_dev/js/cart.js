@@ -3,6 +3,13 @@ let cart = [];
 
 // Load cart from localStorage and initialize UI on page load
 $(document).ready(function() {
+    console.log("Cart.js loaded");
+    
+    // DEBUG: Display localStorage status
+    console.log("LocalStorage status on page load:");
+    console.log("- cart:", localStorage.getItem('cart'));
+    console.log("- quickCheckoutActive:", localStorage.getItem('quickCheckoutActive'));
+    
     // Always load cart from localStorage first
     if (localStorage.getItem('cart')) {
         try {
@@ -14,9 +21,6 @@ $(document).ready(function() {
             localStorage.removeItem('cart');
         }
     }
-    
-    // CRITICAL: Set up event handlers after cart is loaded
-    setupEventHandlers();
     
     // Update UI based on current page
     if (window.location.pathname.includes('/checkout')) {
@@ -32,80 +36,30 @@ $(document).ready(function() {
         
         // Show cart panel if it has items and was previously active
         if (cart.length > 0 && localStorage.getItem('quickCheckoutActive') === 'true') {
+            console.log("Showing quick checkout panel because it was previously active");
             $('.quick-checkout').addClass('active');
         }
     }
+    
+    // Add global debugCart function
+    window.debugCart = function() {
+        console.log("=== CART DEBUG ===");
+        console.log("Cart contents:", cart);
+        console.log("Cart in localStorage:", localStorage.getItem('cart'));
+        console.log("quickCheckoutActive:", localStorage.getItem('quickCheckoutActive'));
+        console.log("Quick checkout has 'active' class:", $('.quick-checkout').hasClass('active'));
+        console.log("Current path:", window.location.pathname);
+        console.log("==================");
+    };
+    
+    // Call it once on page load
+    window.debugCart();
 });
-
-// Set up all event handlers
-function setupEventHandlers() {
-    // Clear any existing handlers to prevent duplicates
-    $('.quick-checkout .add-to-cart').off('click');
-    $('.dash-to-open').off('click');
-    $(document).off('click', '.counter-plus.minus');
-    $(document).off('click', '.counter-minus.plus');
-    
-    // "Order" button in quick checkout
-    $('.quick-checkout .add-to-cart').on('click', function() {
-        console.log("Order button clicked, redirecting to checkout");
-        window.location.href = '/checkout';
-    });
-    
-    // Toggle quick checkout panel
-    $('.dash-to-open').on('click', function() {
-        console.log("Dash to open clicked");
-        $('.quick-checkout').toggleClass('active');
-        
-        // Store state in localStorage
-        localStorage.setItem('quickCheckoutActive', $('.quick-checkout').hasClass('active'));
-        console.log("Quick checkout active:", localStorage.getItem('quickCheckoutActive'));
-    });
-    
-    // Quantity buttons (minus)
-    $(document).on('click', '.counter-plus.minus', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        // Prevent rapid clicking
-        if ($(this).data('clicking')) return;
-        $(this).data('clicking', true);
-        
-        const itemContainer = $(this).closest('.border-top.border-bottom');
-        const productId = itemContainer.attr('data-product-id');
-        if (productId) {
-            updateQuantity(productId, -1);
-        }
-        
-        const button = $(this);
-        setTimeout(function() {
-            button.data('clicking', false);
-        }, 300);
-    });
-    
-    // Quantity buttons (plus)
-    $(document).on('click', '.counter-minus.plus', function(e) {
-        e.preventDefault();
-        e.stopPropagation();
-        
-        // Prevent rapid clicking
-        if ($(this).data('clicking')) return;
-        $(this).data('clicking', true);
-        
-        const itemContainer = $(this).closest('.border-top.border-bottom');
-        const productId = itemContainer.attr('data-product-id');
-        if (productId) {
-            updateQuantity(productId, 1);
-        }
-        
-        const button = $(this);
-        setTimeout(function() {
-            button.data('clicking', false);
-        }, 300);
-    });
-}
 
 // Add to cart function - called from product pages
 function addToCart(productId, productName, productPrice, productCategory) {
+    console.log("Adding to cart:", productId, productName, productPrice, productCategory);
+    
     // Check if product already exists in cart
     const existingProductIndex = cart.findIndex(item => item.id === productId);
     
@@ -186,14 +140,18 @@ function updateQuickCheckoutUI() {
     $('.quick-checkout-content .border-top.border-bottom').each(function() {
         const counter = $(this).find('.row.justify-content-end');
         if (counter.length) {
-            var options = {
-                minimum: 1,
-                maximize: 10,
-                onChange: function(val) {
-                    // This allows the document-level handlers to do their work
-                }
-            };
-            counter.handleCounter(options);
+            try {
+                var options = {
+                    minimum: 1,
+                    maximize: 10,
+                    onChange: function(val) {
+                        // This allows the document-level handlers to do their work
+                    }
+                };
+                counter.handleCounter(options);
+            } catch(e) {
+                console.error("Error initializing counter:", e);
+            }
         }
     });
 }

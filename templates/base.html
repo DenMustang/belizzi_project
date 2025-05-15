@@ -17,6 +17,12 @@
 </head>
 
 <body>
+    <!-- Debug panel for developers (hidden by default) -->
+    <div id="debug-panel" style="display: none; position: fixed; bottom: 0; right: 0; background: rgba(0,0,0,0.7); color: white; padding: 10px; z-index: 9999; font-family: monospace;">
+        <button onclick="window.debugCart()">Debug Cart</button>
+        <button onclick="localStorage.clear(); location.reload();">Clear LocalStorage & Reload</button>
+    </div>
+
     {% include 'navbar.html' %}
 
     {% block content %}
@@ -28,6 +34,76 @@
     <script src="https://code.jquery.com/jquery-1.12.4.min.js"></script>
     <script src="{% static 'static_prod/js/handleCounter.js' %}"></script>
     <script src="{% static 'static_prod/js/index.js' %}"></script>
+    
+    <!-- Basic functionality script -->
+    <script>
+        // Store original onclick attributes
+        var storedOnclicks = {};
+        
+        $(document).ready(function() {
+            console.log("Base script loading...");
+            
+            // 1. Restaurant blocks toggle active class when clicked
+            $('div.restaurant-block').on('click', function(event) {
+                // Only toggle if we didn't click a button
+                if (!$(event.target).is('button') && !$(event.target).closest('button').length) {
+                    $(this).toggleClass('active');
+                }
+            });
+            
+            // 2. Make sure dash-to-open works
+            $('.dash-to-open').on('click', function() {
+                console.log("Dash to open clicked");
+                $('.quick-checkout').toggleClass('active');
+            });
+            
+            // 3. Initialize handle counter for quantity inputs
+            var options = {
+                minimum: 1,
+                maximize: 10,
+                onChange: function(val) { 
+                    console.log('Value changed: ' + val);
+                }
+            };
+            
+            try {
+                $('#handleCounter').handleCounter(options);
+            } catch(e) {
+                console.error("Error initializing handleCounter", e);
+            }
+            
+            // 4. Store and call original onclick handlers for all add-to-cart buttons
+            $('button.add-to-cart').each(function(index) {
+                var button = $(this);
+                var originalOnclick = button.attr('onclick');
+                
+                if (originalOnclick) {
+                    // Store the original onclick
+                    storedOnclicks[index] = originalOnclick;
+                    
+                    // Remove the original onclick
+                    button.removeAttr('onclick');
+                    
+                    // Add a new click handler that calls the original one
+                    button.on('click', function(e) {
+                        e.stopPropagation(); // Prevent the click from bubbling up
+                        console.log("Add to cart clicked, executing:", storedOnclicks[index]);
+                        // Eval is not ideal but needed in this case
+                        eval(storedOnclicks[index]);
+                    });
+                }
+            });
+            
+            // Debug panel toggle with Ctrl+Shift+D
+            $(document).keydown(function(e) {
+                if (e.ctrlKey && e.shiftKey && e.keyCode === 68) {
+                    $('#debug-panel').toggle();
+                }
+            });
+            
+            console.log("Base script loaded successfully");
+        });
+    </script>
     
     <!-- Cart.js - core shopping cart functionality -->
     <script src="{% static 'static_dev/js/cart.js' %}"></script>
