@@ -43,18 +43,4 @@
 	</div>
 </footer>
 
-<script>
-    $(document).ready(function() {
-        // Quick checkout toggle
-        $('.dash-to-open').on('click', function() {
-            console.log("Toggling quick checkout");
-            $('.quick-checkout').toggleClass('active');
-            localStorage.setItem('quickCheckoutActive', $('.quick-checkout').hasClass('active'));
-        });
-        
-        // Checkout button click
-        $('.checkout-button').on('click', function() {
-            window.location.href = '/checkout';
-        });
-    });
-</script>
+<!-- Event handlers now managed by main.js -->

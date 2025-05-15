@@ -6,6 +6,13 @@ $(document).ready(function() {
     $('.quick-checkout').hide();
     $('.icon-menu').closest('.row').hide();
     
+    // Load checkout items if not already loaded
+    if (window.BelizziCart && typeof window.BelizziCart.loadCheckoutItems === 'function') {
+        window.BelizziCart.loadCheckoutItems();
+    } else if (typeof window.loadCheckoutItems === 'function') {
+        window.loadCheckoutItems();
+    }
+    
     // Add event listener to complete order button
     $('#complete-order-btn').off('click').on('click', function() {
         // Get the selected payment method
@@ -17,11 +24,13 @@ $(document).ready(function() {
         // If payment method is selected, proceed with the order and redirect
         if (paymentMethod) {
             // Clear the cart
-            if (typeof clearCart === 'function') {
+            if (window.BelizziCart && typeof window.BelizziCart.clear === 'function') {
+                window.BelizziCart.clear();
+            } else if (typeof clearCart === 'function') {
                 clearCart();
             } else {
                 console.error("clearCart function not found");
-                localStorage.removeItem('cart');
+                localStorage.removeItem('belizzi_cart');
                 localStorage.setItem('quickCheckoutActive', 'false');
             }
             
