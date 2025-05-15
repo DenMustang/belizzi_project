@@ -67,43 +67,6 @@ User (auth_user) is a separate built-in Django model.
 
 ---
 
-## 🚀 Getting Started
-
-**1. Clone the repository**
-
-```
-git clone https://github.com/your-username/your-repo.git
-cd your-repo
-```
-
-**2. Install dependencies**
-
-```
-pip install -r requirements.txt
-```
-
-**3. Run migrations**
-
-```
-python manage.py migrate
-```
-
-**4. Create superuser (optional for admin access)**
-
-```
-python manage.py createsuperuser
-```
-
-**5. Start the development server**
-
-```
-python manage.py runserver
-```
-
-Now visit `http://127.0.0.1:8000/admin` to access the admin panel.
-
----
-
 ## 🧰 Technologies Used
 
 - **Backend**: Django (Python)
